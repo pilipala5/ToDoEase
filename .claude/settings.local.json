@@ -1,0 +1,22 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(python:*)",
+      "Bash(npm cache clean:*)",
+      "Bash(npm config set:*)",
+      "Bash(npm install:*)",
+      "Bash(npm run:*)",
+      "Bash(start-desktop.bat)",
+      "Bash(taskkill:*)",
+      "Bash(wmic process where ProcessId=32380 delete:*)",
+      "Bash(curl:*)",
+      "Bash(grep:*)",
+      "Bash(mkdir:*)",
+      "Bash(npx electron-builder:*)",
+      "Bash(del:*)",
+      "Bash(cmd:*)"
+    ],
+    "deny": [],
+    "ask": []
+  }
+}

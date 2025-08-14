@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ToDoEase - 极简任务管理</title>
+    <link rel="stylesheet" href="/static/styles.css">
+</head>
+<body>
+    <div class="app">
+        <header class="header">
+            <div class="logo">ToDoEase</div>
+            <div class="date" id="currentDate"></div>
+        </header>
+        
+        <div class="main-container">
+            <aside class="sidebar">
+                <div class="calendar-section">
+                    <div class="calendar-header">
+                        <button class="calendar-nav" id="prevMonth">◀</button>
+                        <h3 class="calendar-title" id="calendarTitle">2025年8月</h3>
+                        <button class="calendar-nav" id="nextMonth">▶</button>
+                    </div>
+                    <div class="calendar-controls">
+                        <button class="calendar-today-btn" id="jumpToToday" title="跳转到今天">今天</button>
+                        <input type="date" class="calendar-date-input" id="calendarDateInput" title="选择日期">
+                    </div>
+                    <div class="calendar-grid">
+                        <div class="calendar-weekday">日</div>
+                        <div class="calendar-weekday">一</div>
+                        <div class="calendar-weekday">二</div>
+                        <div class="calendar-weekday">三</div>
+                        <div class="calendar-weekday">四</div>
+                        <div class="calendar-weekday">五</div>
+                        <div class="calendar-weekday">六</div>
+                        <div class="calendar-days" id="calendarDays"></div>
+                    </div>
+                </div>
+                
+                <div class="calendar-legend">
+                  <div class="legend-item"><span class="legend-color completed-all"></span><span>当天任务已全部完成</span></div>
+                  <div class="legend-item"><span class="legend-color completed-partial"></span><span>当天有部分任务完成</span></div>
+                  <div class="legend-item"><span class="legend-color not-completed"></span><span>当天有任务未完成</span></div>
+                </div>
+                
+                <div class="stats-section">
+                    <h4>本月统计</h4>
+                    <div class="stats-item">
+                        <span>总任务:</span>
+                        <span id="monthTotalTasks">0</span>
+                    </div>
+                    <div class="stats-item">
+                        <span>已完成:</span>
+                        <span id="monthCompletedTasks">0</span>
+                    </div>
+                    <div class="stats-item">
+                        <span>完成率:</span>
+                        <span id="monthCompletionRate">0%</span>
+                    </div>
+                </div>
+            </aside>
+            
+            <main class="content-area">
+                <div class="input-section">
+                    <div class="input-container">
+                        <input type="text" id="taskInput" placeholder="添加新任务..." class="task-input">
+                        <button class="add-task-btn" id="addTaskBtn" title="确认添加">✓</button>
+                    </div>
+                    <div class="input-hint">回车或点击按钮添加任务 | Tab 添加子任务 | Esc 清空</div>
+                </div>
+                                <div class="content" id="listView">
+                    <div class="section">
+                        <h3 class="section-title">未完成 (<span id="incompleteCount">0</span>)</h3>
+                        <div class="task-list" id="incompleteTasks"></div>
+                    </div>
+                    
+                    <div class="section">
+                        <h3 class="section-title">已完成 (<span id="completeCount">0</span>)</h3>
+                        <div class="task-list" id="completedTasks"></div>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+    
+    <script src="/static/script.js"></script>
+</body>
+</html>

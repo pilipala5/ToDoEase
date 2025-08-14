@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>ToDoEase</title>
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'">
+  <style>
+    html,body { height: 100%; margin: 0; font-family: system-ui, Arial, sans-serif; }
+    .wrap { height: 100%; display: flex; align-items: center; justify-content: center; background: #0f172a; color: #e2e8f0; }
+    .card { text-align: center; padding: 32px 40px; border-radius: 16px; background: #111827; box-shadow: 0 10px 30px rgba(0,0,0,.35); }
+    .logo { font-size: 22px; margin-bottom: 8px; font-weight: 600; letter-spacing: .3px; }
+    .sub { opacity: .85; font-size: 14px; }
+    .spinner { width: 36px; height: 36px; border: 3px solid #475569; border-top-color: transparent; border-radius: 50%; margin: 18px auto; animation: spin 1s linear infinite; }
+    @keyframes spin { to { transform: rotate(360deg); } }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="card">
+      <div class="logo">ToDoEase</div>
+      <div class="spinner"></div>
+      <div class="sub">Starting backend...</div>
+    </div>
+  </div>
+</body>
+</html>

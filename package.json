@@ -1,0 +1,49 @@
+{
+  "name": "todoease",
+  "version": "1.0.0",
+  "description": "Lightweight local task manager desktop app",
+  "main": "electron/main.js",
+  "scripts": {
+    "start": "python -m uvicorn backend.main:app --host 127.0.0.1 --port 8000",
+    "electron": "electron .",
+    "dist": "electron-builder --publish=never",
+    "dist:nsis": "electron-builder --win nsis --publish=never",
+    "dist:dir": "electron-builder --dir --publish=never"
+  },
+  "devDependencies": {
+    "electron": "27.0.0",
+    "electron-builder": "^24.13.3",
+    "wait-on": "^7.2.0"
+  },
+  "build": {
+    "appId": "com.todoease.app",
+    "productName": "ToDoEase",
+    "directories": { "output": "dist" },
+    "artifactName": "ToDoEase-Setup-${version}.exe",
+    "asar": true,
+    "files": [
+      "electron/**/*",
+      "package.json",
+      "node_modules/**/*",
+      "!dist/**",
+      "!backend_dist/**",
+      "!backend/**",
+      "!frontend/**"
+    ],
+    "extraResources": [
+      { "from": "backend_dist/ToDoEase-Backend", "to": "backend" }
+    ],
+    "win": {
+      "target": [
+        { "target": "nsis", "arch": ["x64"] }
+      ],
+      "icon": "assets/icon.ico"
+    },
+    "nsis": {
+      "oneClick": true,
+      "perMachine": false,
+      "allowToChangeInstallationDirectory": false,
+      "deleteAppDataOnUninstall": false
+    }
+  }
+}
