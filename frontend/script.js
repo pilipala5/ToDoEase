@@ -11,6 +11,7 @@ class ToDoEase {
     this.selectedDate = new Date();         // 当前选中的日期，默认为今天
     this.calendarData = new Map();          // Map<'YYYY-MM-DD', {total, completed}>
     this.isFilteringByDate = false;         // 是否正在按日期过滤
+    this.firstLoad = true;   // ✅ 首次加载兜底
 
     this.init();
   }
@@ -20,9 +21,16 @@ class ToDoEase {
     this.bindEvents();
     this.bindCalendarEvents();
     this.updateDate();
-    this.selectedDate = new Date(); // 默认选中今天
+
+    // ✅ 打开即按今天过滤
+    const today = new Date();
+    this.selectedDate = today;
+    this.isFilteringByDate = true;
+    this.updateTopDate(today);   // 同步头部日期显示
+
     this.loadTasks();
   }
+
 
   bindEvents() {
     const taskInput = document.getElementById("taskInput");
@@ -190,10 +198,19 @@ class ToDoEase {
       this.tasks = Array.isArray(data) ? data : [];
       this.tasks.forEach(t => { if (!Array.isArray(t.subtasks)) t.subtasks = []; });
 
-      // 渲染任务列表
+      // ✅ 首次加载兜底：确保默认显示“今天的任务”
+      if (this.firstLoad) {
+        const today = new Date();
+        this.selectedDate = today;
+        this.isFilteringByDate = true;
+        this.updateTopDate(today);
+        this.firstLoad = false;
+      }
+
+      // 渲染任务列表（会根据 isFilteringByDate 决定渲染哪一类）
       this.renderCurrentView();
-      
-      // 更新日历
+
+      // 更新日历/统计
       this.buildCalendarData();
       this.renderCalendar();
       await this.updateMonthlyStats();
@@ -201,9 +218,10 @@ class ToDoEase {
       console.error("加载任务失败:", err);
       this.tasks = [];
       this.renderCurrentView();
-      this.updateStats();
+      this.updateStats && this.updateStats();
     }
   }
+
 
   // 根据当前状态渲染视图
   renderCurrentView() {

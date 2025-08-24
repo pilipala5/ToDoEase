@@ -4,6 +4,8 @@ const path = require('path');
 const { spawn } = require('child_process');
 const http = require('http');
 const fs = require('fs');
+// 禁用 HTTP 缓存（开发/打包都生效）
+app.commandLine.appendSwitch('disable-http-cache');
 
 let mainWindow;
 let pythonProcess;
@@ -57,8 +59,23 @@ function createWindow() {
   }
 
   // wait then switch
+  // wait then switch（清缓存 + 加时间戳防缓存）
   waitForServer(BACKEND_URL, 60000, 300)
-    .then(() => mainWindow.loadURL(BACKEND_URL))
+    .then(async () => {
+      try {
+        // 清理缓存与 ServiceWorker/caches
+        await mainWindow.webContents.session.clearCache();
+        await mainWindow.webContents.session.clearStorageData({
+          storages: ['serviceworkers', 'caches']
+        });
+      } catch (e) {
+        // 忽略清理异常，继续加载
+        console.warn('clear cache error:', e);
+      }
+      // 加上时间戳参数，确保 index.html 不被缓存
+      const urlWithTs = `${BACKEND_URL}?t=${Date.now()}`;
+      return mainWindow.loadURL(urlWithTs);
+    })
     .catch((err) => {
       dialog.showErrorBox('Backend failed to start', (err && err.message) || String(err));
     });
